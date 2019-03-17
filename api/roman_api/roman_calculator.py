@@ -65,11 +65,13 @@ def int_to_roman(number: int) -> str:
 
 def roman_calculator(roman_text: str) -> str:
     """
-    I have never used the ast library and this looks like a good opportunity to use it
-    to simplify the working solution
+    To simplify errors feedback, we will simply catch any exception
     """
-    number = Calc.evaluate(roman_text)
-    return int_to_roman(number)
+    try:
+        number = Calc.evaluate(roman_text)
+        return int_to_roman(number)
+    except Exception:
+        raise InvalidCalculatorInput('Invalid expression')
 
 
 _OP_MAP = {

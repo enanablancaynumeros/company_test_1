@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from wtforms import SubmitField, StringField
 
+from .roman_calculator import roman_calculator, InvalidCalculatorInput
+
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -19,12 +21,13 @@ def roman_calculator_get():
 
 @app.route("/", methods=["POST"])
 def roman_calculator_post():
-    from .roman_calculator import roman_calculator
-
     form = RomanCalculatorForm(request.form)
     if form.validate_on_submit():
-        roman_result = roman_calculator(form.data["roman_text"])
-        flash(f'The result of "{form.data["roman_text"]}" is "{roman_result}"')
+        try:
+            roman_result = roman_calculator(form.data["roman_text"])
+            flash(f'The result of "{form.data["roman_text"]}" is "{roman_result}"')
+        except InvalidCalculatorInput:
+            flash(f'Invalid input {form.data["roman_text"]}')
 
     return render_template("roman.html", form=form)
 

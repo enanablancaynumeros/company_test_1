@@ -3,6 +3,7 @@ import pytest
 from api.roman_api.roman_calculator import (
     roman_to_int,
     InvalidRomanInput,
+    InvalidCalculatorInput,
     int_to_roman,
     roman_calculator,
 )
@@ -70,3 +71,8 @@ def test_to_roman_nice_input(number, expected):
 )
 def test_calculator(text, expected):
     assert roman_calculator(text) == expected
+
+
+def test_calculator_exception():
+    with pytest.raises(InvalidCalculatorInput):
+        roman_calculator("2 + 2")
