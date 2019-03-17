@@ -39,3 +39,8 @@ def int_to_roman(number: int) -> str:
         result += letter * int(number / n)
         number %= n
     return result
+
+
+def roman_calculator(roman_text: str) -> str:
+    items = roman_text.split()
+    
