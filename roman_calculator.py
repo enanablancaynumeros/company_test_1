@@ -23,19 +23,18 @@ def char_to_int(char: str) -> int:
 
 def roman_to_int(roman_text: str) -> int:
     total = 0
-    i = 0
-    while i < len(roman_text):
-        first_number = char_to_int(roman_text[i])
-        if i == len(roman_text) - 1:
-            total += first_number
+
+    if len(roman_text):
+        total += char_to_int(roman_text[-1])
+    else:
+        raise InvalidRomanInput(roman_text)
+
+    for i, char in enumerate(reversed(roman_text[:-1])):
+        current_number = char_to_int(char)
+        previous_number = char_to_int(roman_text[len(roman_text)-i-1])
+        if current_number >= previous_number:
+            total += current_number
         else:
-            second_number = char_to_int(roman_text[i+1])
-            if second_number > first_number:
-                total += second_number
-                total -= first_number
-                i += 1
-            else:
-                total += first_number
-        i += 1
+            total -= current_number
 
     return total

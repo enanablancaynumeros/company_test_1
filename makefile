@@ -3,4 +3,4 @@
 SHELL := /bin/bash
 
 tests:
-	pytest
+	pytest -sv --lf
