@@ -1,6 +1,11 @@
 import pytest
 
-from roman_calculator import roman_to_int, InvalidRomanInput, int_to_roman, roman_calculator
+from roman_calculator import (
+    roman_to_int,
+    InvalidRomanInput,
+    int_to_roman,
+    roman_calculator,
+)
 
 
 @pytest.mark.parametrize(
@@ -57,8 +62,10 @@ def test_to_roman_nice_input(number, expected):
         ("I + I", "II"),
         ("III - I", "II"),
         ("IV * IV", "XVI"),
-        ("VI ^ 3", "64"),
+        ("VI ^ II", "XXXVI"),
         ("XI - II + X", "XIX"),
+        ("(XXI - (II * X))", "I"),
+        ("XXII - II * X", "II"),
     ],
 )
 def test_calculator(text, expected):

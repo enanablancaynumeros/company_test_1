@@ -1,4 +1,12 @@
+import ast
+import operator
+
+
 class InvalidRomanInput(Exception):
+    pass
+
+
+class InvalidCalculatorInput(Exception):
     pass
 
 
@@ -32,7 +40,21 @@ def roman_to_int(roman_text: str) -> int:
 
 
 def int_to_roman(number: int) -> str:
-    combinations = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
+    combinations = [
+        "M",
+        "CM",
+        "D",
+        "CD",
+        "C",
+        "XC",
+        "L",
+        "XL",
+        "X",
+        "IX",
+        "V",
+        "IV",
+        "I",
+    ]
     nums = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
     result = ""
     for letter, n in zip(combinations, nums):
@@ -42,5 +64,41 @@ def int_to_roman(number: int) -> str:
 
 
 def roman_calculator(roman_text: str) -> str:
-    items = roman_text.split()
-    
+    """
+    I have never used the ast library and this looks like a good opportunity to use it
+    to simplify the working solution
+    """
+    number = Calc.evaluate(roman_text)
+    return int_to_roman(number)
+
+
+_OP_MAP = {
+    ast.Add: operator.add,
+    ast.Sub: operator.sub,
+    ast.Mult: operator.mul,
+    ast.Div: operator.floordiv,
+    ast.BitXor: operator.pow,
+}
+
+
+class Calc(ast.NodeVisitor):
+    """
+    Extended from https://stackoverflow.com/questions/33029168/how-to-calculate-an-equation-in-a-string-python
+    """
+
+    def visit_BinOp(self, node):
+        left = self.visit(node.left)
+        right = self.visit(node.right)
+        return _OP_MAP[type(node.op)](left, right)
+
+    def visit_Name(self, node):
+        return roman_to_int(node.id)
+
+    def visit_Expr(self, node):
+        return self.visit(node.value)
+
+    @classmethod
+    def evaluate(cls, expression):
+        tree = ast.parse(expression)
+        calc = cls()
+        return calc.visit(tree.body[0])
