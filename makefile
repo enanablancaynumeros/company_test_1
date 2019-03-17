@@ -10,3 +10,7 @@ build:
 
 up: build
 	cd docker && docker-compose up
+
+task_1:
+	go run task_1.go
+
