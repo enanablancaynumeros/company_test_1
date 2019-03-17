@@ -1,12 +1,37 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, request, flash
+from flask_wtf import FlaskForm
+from flask_bootstrap import Bootstrap
+from wtforms import SubmitField, StringField
+
+
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
+app.config["SECRET_KEY"] = os.environ["APP_SECRET_KEY"]
 
 
-@app.route("/", methods=['GET', 'POST'])
-def roman_calculator():
-    return "Hello World!"
+@app.route("/", methods=["GET"])
+def roman_calculator_get():
+    form = RomanCalculatorForm()
+    return render_template("roman.html", form=form)
+
+
+@app.route("/", methods=["POST"])
+def roman_calculator_post():
+    from .roman_calculator import roman_calculator
+
+    form = RomanCalculatorForm(request.form)
+    if form.validate_on_submit():
+        roman_result = roman_calculator(form.data["roman_text"])
+        flash(f'The result of "{form.data["roman_text"]}" is "{roman_result}"')
+
+    return render_template("roman.html", form=form)
+
+
+class RomanCalculatorForm(FlaskForm):
+    roman_text = StringField("Roman input")
+    submit = SubmitField("Submit")
 
 
 if __name__ == "__main__":
