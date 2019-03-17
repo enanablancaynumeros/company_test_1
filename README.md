@@ -1,4 +1,4 @@
-# how to run
+# Task 2
 
 in your virtualenv run `pip install -r requirements.txt` and run `make up` to see 
 the web application running on `localhost:8000`. Only docker-compose required for this step.
@@ -12,4 +12,5 @@ tests for the roman calculator frontend would have been a must have but it requi
 
 It is implemented in golang as it is a bit simpler than the second task and can be executed
 with `make task_1`. An alternative to installing golang in your laptop -> https://play.golang.org/
+This code is missing tests.
 
