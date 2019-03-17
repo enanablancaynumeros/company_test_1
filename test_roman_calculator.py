@@ -1,10 +1,11 @@
 import pytest
 
-from roman_calculator import roman_to_int, InvalidRomanInput
+from roman_calculator import roman_to_int, InvalidRomanInput, int_to_roman
 
 
 @pytest.mark.parametrize(
-    'roman_text,expected', [
+    "roman_text,expected",
+    [
         ("I", 1),
         ("III", 3),
         ("IV", 4),
@@ -12,10 +13,11 @@ from roman_calculator import roman_to_int, InvalidRomanInput
         ("XI", 11),
         ("XXII", 22),
         ("CCXXVI", 226),
-        ("CM", 900),
+        ("CMXC", 990),
         ("MDCCXII", 1712),
         ("MMXIX", 2019),
-    ])
+    ],
+)
 def test_to_integer_nice_input(roman_text, expected):
     assert roman_to_int(roman_text) == expected
 
@@ -28,3 +30,22 @@ def test_roman_to_int_exception():
 def test_roman_to_int_exception_empty():
     with pytest.raises(InvalidRomanInput):
         roman_to_int("")
+
+
+@pytest.mark.parametrize(
+    "number,expected",
+    [
+        (1, "I"),
+        (3, "III"),
+        (4, "IV"),
+        (6, "VI"),
+        (11, "XI"),
+        (22, "XXII"),
+        (226, "CCXXVI"),
+        (990, "CMXC"),
+        (1712, "MDCCXII"),
+        (2019, "MMXIX"),
+    ],
+)
+def test_to_roman_nice_input(number, expected):
+    assert int_to_roman(number) == expected
