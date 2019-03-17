@@ -1,5 +1,5 @@
 
-class InvalidInput(Exception):
+class InvalidRomanInput(Exception):
     pass
 
 
@@ -18,7 +18,7 @@ def char_to_int(char: str) -> int:
     try:
         return roman_map[char]
     except KeyError as e:
-        raise InvalidInput(str(e))
+        raise InvalidRomanInput(str(e))
 
 
 def roman_to_int(roman_text: str) -> int:

@@ -1,6 +1,6 @@
 import pytest
 
-from roman_calculator import roman_to_int
+from roman_calculator import roman_to_int, InvalidRomanInput
 
 
 @pytest.mark.parametrize(
@@ -15,3 +15,8 @@ from roman_calculator import roman_to_int
     ])
 def test_to_integer_nice_input(roman_text, expected):
     assert roman_to_int(roman_text) == expected
+
+
+def test_roman_to_int_exception():
+    with pytest.raises(InvalidRomanInput):
+        roman_to_int("XO")
