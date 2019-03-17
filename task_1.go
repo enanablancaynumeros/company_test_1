@@ -7,21 +7,22 @@ import (
 
 func main() {
 	for i := 0.0; i < 101.0; i += 1.0 {
-		multiple_five := math.Mod(i, 5) == 0.0
-		multiple_three := math.Mod(i, 3) == 0.0
-		fibonacci_number := is_fibonacci_number(i)
-
-		if multiple_three && multiple_five && fibonacci_number {
+		MultipleFive := math.Mod(i, 5) == 0.0
+		MultipleThree := math.Mod(i, 3) == 0.0
+		FibonacciNumber := isFibonacciNumber(i)
+		// it isn't very clear to me the exclusive conditions in the text,
+		// so obviously this is how I interpreted the text :)
+		if MultipleThree && MultipleFive && FibonacciNumber {
 			fmt.Println("Pink Flamingo")
-		} else if fibonacci_number == true {
+		} else if FibonacciNumber == true {
 			fmt.Println("Flamingo")
 		}
 
-		if multiple_three && multiple_five {
+		if MultipleThree && MultipleFive {
 			fmt.Println("FizzBuzz")
-		} else if multiple_three {
+		} else if MultipleThree {
 			fmt.Println("Fizz")
-		} else if multiple_five {
+		} else if MultipleFive {
 			fmt.Println("Buzz")
 		} else {
 			fmt.Println(i)
@@ -29,13 +30,13 @@ func main() {
 	}
 }
 
-func is_fibonacci_number(x float64) bool {
+func isFibonacciNumber(x float64) bool {
 	first := 5*math.Pow(x, 2) + 4
 	second := 5*math.Pow(x, 2) - 4
 
 	squared := math.Sqrt(first)
-	is_integer := squared == float64(int64(squared))
-	if is_integer {
+	isInteger := squared == float64(int64(squared))
+	if isInteger {
 		return true
 	} else {
 		squared := math.Sqrt(second)
