@@ -1,0 +1,14 @@
+version: "3.6"
+
+services:
+
+  api:
+    build:
+      context: ../
+      dockerfile: docker/api.Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    command: --api
+    ports:
+      - "${API_PORT}:${API_PORT}"
